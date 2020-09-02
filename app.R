@@ -19,11 +19,11 @@ ui <- fluidPage(
   sidebarLayout(
     sidebarPanel(
       # Input Quant-it data
-      fileInput("file", "1. Quant-it データを選択", accept = c(".csv")),
+      fileInput("file", "1. Select Quant-it data", accept = c(".csv")),
       
       # Select STD column
       checkboxGroupInput("std_columns", 
-                         "2. 標準 DNA/RNA の列を選択", 
+                         "2. Select standard DNA/RNA columns", 
                          choices = list("Column 1" = 2, 
                                         "Column 2" = 3, 
                                         "Column 3" = 4, 
@@ -39,49 +39,49 @@ ui <- fluidPage(
                          selected = NULL),
       
       # Specify STD concentrations
-      textInput("std_dna_conc", "3. 標準 DNA/RNA の濃度を入力 (ng/µl)", 
+      textInput("std_dna_conc", "3. Enter standard DNA/RNA concs. (ng/µl)", 
                 value = "0,50,100,200,400,600,800,1000"),
       
       # Specify volume of standard
-      numericInput("std_vol", "4. 標準 DNA/RNA 溶液の量を入力", 10),
+      numericInput("std_vol", "4. Enter standard DNA/RNA volume (µl)", 10),
       
       # Show standard curve
-      actionButton("show_standard_curve", "5. 検量線をチェック"),
+      actionButton("show_standard_curve", "5. Check standard curve"),
       
       # Specify volume of samples
-      numericInput("sample_vol", "6. サンプル溶液の量を入力", 5),
+      numericInput("sample_vol", "6. Enter sample volume (µl)", 5),
       
       # Show standard curve
-      actionButton("convert_data1", "7. ウェルあたりの DNA 量を計算 (ng/well)"),
+      actionButton("convert_data1", "7. Calculate DNA/RNA amount per well (ng/well)"),
       
       # Show standard curve
-      actionButton("convert_data2", "8. DNA 濃度を計算 (ng/µl in sample)"),
+      actionButton("convert_data2", "8. Calculate DNA/RNA concs. in sample solution (ng/µl in sample)"),
       
       # Specify NC wells
-      textInput("nc_wells", "[オプション] ネガコンの濃度を入力 (Ex. 1.0, 2.1, ...)",  value = "0"),
+      textInput("nc_wells", "[Option] Enter NC concs. (Ex. 1.0, 2.1, ...)",  value = "0"),
 
       # Download results
-      downloadButton('data1', label = "DNA/RNA 濃度データ"),
-      downloadButton('data2', label = "[オプション] ネガコンを差し引いたデータ"),
+      downloadButton('data1', label = "DNA/RNA conc data"),
+      downloadButton('data2', label = "[Option] NC-subtracted data"),
       
       # Input data for bioTEC
-      fileInput("input_for_biotec", "9. DNA/RNA 濃度データを選択", accept = c(".csv")),
-      numericInput("target_conc", "10. 揃えたい DNA/RNA 濃度", 5),
+      fileInput("input_for_biotec", "9. Select DNA/RNA conc data", accept = c(".csv")),
+      numericInput("target_conc", "10. Enter target DNA/RNA concs.", 5),
       
       # Show standard curve
-      actionButton("generate_biotec", "11. BioTEC 用シートを生成"),
-      downloadButton('data3', label = "BioTEC シート"),
+      actionButton("generate_biotec", "11. Generate BioTEC sheet"),
+      downloadButton('data3', label = "BioTEC sheet"),
     ),
     
     mainPanel(
       tabsetPanel(type = "tabs",
-                  tabPanel("Quant-it データ", tableOutput('table')),
-                  tabPanel("標準 DNA/RNA データ", tableOutput('std_data')),
-                  tabPanel("検量線", plotOutput('std_plot')),
-                  tabPanel("ウェルあたりの DNA/RNA 量 (ng/well)", tableOutput('amount_data')),
-                  tabPanel("DNA/RNA 濃度", tableOutput('not_corrected_data')),
-                  tabPanel("DNA/RNA 濃度 (ネガコン補正後)", tableOutput('corrected_data')),
-                  tabPanel("BioTEC 用シート", tableOutput('biotec_sheet'))
+                  tabPanel("Quant-it data", tableOutput('table')),
+                  tabPanel("Standard DNA/RNA data", tableOutput('std_data')),
+                  tabPanel("Standard curve", plotOutput('std_plot')),
+                  tabPanel("DNA/RNA amount per well (ng/well)", tableOutput('amount_data')),
+                  tabPanel("DNA/RNA concs (ng/µl in sample)", tableOutput('not_corrected_data')),
+                  tabPanel("DNA/RNA concs (NC-subtracted)", tableOutput('corrected_data')),
+                  tabPanel("BioTEC sheet", tableOutput('biotec_sheet'))
       )
     )
   )
